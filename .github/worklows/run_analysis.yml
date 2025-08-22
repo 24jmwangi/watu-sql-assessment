@@ -1,0 +1,90 @@
+name: Run SQL Analysis
+
+on:
+  workflow_dispatch: # Allows manual triggering
+  push:
+    branches: [ "main" ]
+    paths: 
+      - 'scripts/**' # Only run if scripts change
+
+jobs:
+  run-sql-analysis:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: watu_assessment
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup PostgreSQL client
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y postgresql-client
+
+    - name: Wait for PostgreSQL to be ready
+      run: |
+        for i in {1..10}; do
+          if pg_isready -h localhost -p 5432 -U postgres; then
+            echo "PostgreSQL is ready!"
+            break
+          fi
+          echo "Waiting for PostgreSQL... attempt $i"
+          sleep 3
+        done
+
+    - name: Create Schema and Tables
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        PGPASSWORD: postgres
+        PGDATABASE: watu_assessment
+      run: |
+        psql -f scripts/create_schema.sql
+
+    - name: Insert Dummy Data
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        PGPASSWORD: postgres
+        PGDATABASE: watu_assessment
+      run: |
+        psql -f scripts/insert_dummy_data.sql
+
+    - name: Run Analysis and Save Results
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        PGPASSWORD: postgres
+        PGDATABASE: watu_assessment
+      run: |
+        mkdir -p results
+        echo "# SQL Analysis Results" > results/analysis_results.md
+        echo "## Generated on $(date)" >> results/analysis_results.md
+        echo "### Platform: PostgreSQL" >> results/analysis_results.md
+        echo "\n---" >> results/analysis_results.md
+        psql -f scripts/run_analysis.sql >> results/analysis_results.md
+
+    - name: Show Results
+      run: |
+        cat results/analysis_results.md
+
+    - name: Commit and Push Results
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add results/analysis_results.md
+        git diff --staged --quiet || git commit -m "Automated: Update analysis results"
+        git push
