@@ -1,5 +1,4 @@
--- SQL Platform Used: PostgreSQL
--- Candidate: James Wachuka
+
 
 -- Question 1: Select all clients called Paul in first name or middle name and who are more than 25 years old.
 \echo '=== Question 1: Pauls over 25 years old ==='

@@ -4,7 +4,7 @@ Here is the repository: https://github.com/24jmwangi/watu-sql-assessment
 
 /* 1: Select all clients called Paul in first name or middle name and who are more than 25 years old.
 */
-
+\echo '=== Question 1: Pauls over 25 years old ==='
 SELECT
     client_id,
     first_name,
@@ -22,7 +22,7 @@ ORDER BY
 
 
 /* 2: Add a column with the number of loans per customer. */
-
+\echo '=== Question 2: Number of loans per Paul customer ==='
 SELECT
     c.client_id,
     c.first_name,
@@ -43,7 +43,7 @@ ORDER BY
 
 
 /* 3: Select 100cc, 125cc, and 150cc bikes and extract engine size. */
-
+\echo '=== Question 3: Bikes by engine size ==='
 SELECT
     vehicle_id,
     make,
@@ -58,7 +58,7 @@ WHERE
 
 
 /* 4: Total principal amount per client full name and per vehicle make. */
-
+\echo '=== Question 4: Total principal by client and vehicle ==='
 SELECT
     CONCAT_WS(' ', c.first_name, c.middle_name, c.last_name) AS client_full_name,
     v.make AS vehicle_make,
@@ -74,7 +74,7 @@ ORDER BY
 
 
 /* 5: Add a chronological loan order for each client. */
-
+\echo '=== Question 5: Loan order chronology ==='
 SELECT
     loan_id,
     client_id,
