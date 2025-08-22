@@ -1,7 +1,8 @@
 # SQL Analysis Results
-## Generated on Fri Aug 22 08:01:07 UTC 2025
+## Generated on Fri Aug 22 08:36:39 UTC 2025
 ### Platform: PostgreSQL
 \n---
+=== Question 1: Pauls over 25 years old ===
  client_id | first_name | middle_name | last_name | date_of_birth | age_years 
 -----------+------------+-------------+-----------+---------------+-----------
          2 | Mary       | Paul        | Johnson   | 1985-12-20    |        39
@@ -10,6 +11,7 @@
          4 | Paul       |             | Brown     | 1998-03-25    |        27
 (4 rows)
 
+=== Question 2: Number of loans per Paul customer ===
  client_id | first_name | middle_name | last_name | age_years | number_of_loans 
 -----------+------------+-------------+-----------+-----------+-----------------
          2 | Mary       | Paul        | Johnson   |        39 |               2
@@ -18,6 +20,7 @@
          4 | Paul       |             | Brown     |        27 |               1
 (4 rows)
 
+=== Question 3: Bikes by engine size ===
  vehicle_id |  make  |   model_name    | engine_size 
 ------------+--------+-----------------+-------------
           1 | Honda  | HJ 150CC-11A    | 150
@@ -27,6 +30,7 @@
           6 | Hero   | Hunk 150CC      | 150
 (5 rows)
 
+=== Question 4: Total principal by client and vehicle ===
    client_full_name   | vehicle_make | total_principal_amount 
 ----------------------+--------------+------------------------
  Mary Paul Johnson    | Suzuki       |                3500.00
@@ -39,6 +43,7 @@
  Paul Brown           | TVS          |                1100.00
 (8 rows)
 
+=== Question 5: Loan order chronology ===
  loan_id | client_id | principal_amount | submitted_on_date | loan_order 
 ---------+-----------+------------------+-------------------+------------
        1 |         1 |          2500.00 | 2024-01-15        |          1
