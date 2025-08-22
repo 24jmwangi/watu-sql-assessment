@@ -3,7 +3,7 @@ Here is the repository: https://github.com/24jmwangi/watu-sql-assessment
 */
 
 /* 1: Select all clients called Paul in first name or middle name and who are more than 25 years old.
-
+*/
 
 SELECT
     client_id,
