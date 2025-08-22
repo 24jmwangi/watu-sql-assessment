@@ -1,4 +1,4 @@
-## watu-sql-assessment# Watu SQL Assessment Automation
+## watu-sql-assessment
 
 This repository automates the SQL assessment using GitHub Actions. It sets up a PostgreSQL database, populates it with dummy data, runs the SQL analysis, and saves the results.
 
